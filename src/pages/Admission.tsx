@@ -3,12 +3,15 @@ import { motion } from 'framer-motion'
 import { CheckCircle2, Calendar, ChevronRight } from 'lucide-react'
 import { admissionData } from '@/data/content'
 import { Link } from 'react-router-dom'
+import { SEO } from '@/components/layout/SEO'
 
 export default function Admission() {
   const [selectedPlan, setSelectedPlan] = useState(0)
 
   return (
-    <div>
+    <>
+      <SEO title="Colegio Horizonte | Proceso de Admisión" description="Comienza tu postulación 2025. Conoce los pasos, requisitos y planes de financiamiento." pathname="/admision" />
+      <div>
       <section className="relative py-20 md:py-32 bg-gradient-to-br from-primary-50 via-white to-accent-50 overflow-hidden">
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute top-20 left-10 w-72 h-72 bg-primary-200/20 rounded-full blur-3xl" />
@@ -225,5 +228,6 @@ export default function Admission() {
         </div>
       </section>
     </div>
+    </>
   )
 }

@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { ChevronRight, Award, Heart, MonitorSmartphone, Users, Phone } from 'lucide-react'
 import { schoolData, featuresData, testimonialsData } from '@/data/content'
+import { SEO } from '@/components/layout/SEO'
 
 const iconMap: Record<string, React.FC<{ className?: string }>> = {
   Award,
@@ -28,7 +29,9 @@ const item = {
 
 export default function Home() {
   return (
-    <div>
+    <>
+      <SEO title="Colegio Horizonte | Excelencia Educativa" description="Formando líderes con valores desde 1985. Educación de excelencia con un enfoque humano e integral." pathname="/" />
+      <div>
       <section className="relative min-h-screen flex items-center bg-gradient-to-br from-primary-50 via-white to-accent-50 overflow-hidden">
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute -top-40 -right-40 w-80 h-80 bg-primary-200/30 rounded-full blur-3xl" />
@@ -216,7 +219,16 @@ export default function Home() {
                     {testimonial.content}
                   </p>
                   <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center">
+                    <div className="relative w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center overflow-hidden">
+                      <img
+                        src={testimonial.avatar}
+                        alt={testimonial.name}
+                        loading="lazy"
+                        onError={(e) => {
+                          ;(e.currentTarget as HTMLImageElement).style.display = 'none'
+                        }}
+                        className="absolute inset-0 w-full h-full object-cover"
+                      />
                       <span className="text-primary-600 font-bold text-lg">
                         {testimonial.name.charAt(0)}
                       </span>
@@ -269,5 +281,6 @@ export default function Home() {
         </div>
       </section>
     </div>
+    </>
   )
 }

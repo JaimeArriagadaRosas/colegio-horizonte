@@ -2,6 +2,7 @@ import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { Award, Heart, Lightbulb, Users, Target, HandHeart, ChevronRight } from 'lucide-react'
 import { aboutData } from '@/data/content'
+import { SEO } from '@/components/layout/SEO'
 
 const iconMap: Record<string, React.FC<{ className?: string }>> = {
   Award,
@@ -30,7 +31,9 @@ const item = {
 
 export default function About() {
   return (
-    <div>
+    <>
+      <SEO title="Colegio Horizonte | Nuestra Historia" description="Descubre nuestra historia, misión, visión y valores desde 1985." pathname="/nosotros" />
+      <div>
       <section className="relative py-20 md:py-32 bg-gradient-to-br from-primary-50 via-white to-accent-50 overflow-hidden">
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute top-20 left-10 w-72 h-72 bg-primary-200/20 rounded-full blur-3xl" />
@@ -197,7 +200,16 @@ export default function About() {
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 className="card text-center group"
               >
-                <div className="w-24 h-24 bg-gradient-to-br from-primary-100 to-primary-200 rounded-full mx-auto mb-4 flex items-center justify-center group-hover:from-primary-600 group-hover:to-primary-700 transition-all duration-300">
+                <div className="relative w-24 h-24 bg-gradient-to-br from-primary-100 to-primary-200 rounded-full mx-auto mb-4 flex items-center justify-center overflow-hidden group-hover:from-primary-600 group-hover:to-primary-700 transition-all duration-300">
+                  <img
+                    src={member.image}
+                    alt={member.name}
+                    loading="lazy"
+                    onError={(e) => {
+                      ;(e.currentTarget as HTMLImageElement).style.display = 'none'
+                    }}
+                    className="absolute inset-0 w-full h-full object-cover"
+                  />
                   <span className="text-3xl font-heading font-bold text-primary-600 group-hover:text-white transition-colors">
                     {member.name.split(' ').map(n => n[0]).join('').slice(0, 2)}
                   </span>
@@ -237,5 +249,6 @@ export default function About() {
         </div>
       </section>
     </div>
+    </>
   )
 }

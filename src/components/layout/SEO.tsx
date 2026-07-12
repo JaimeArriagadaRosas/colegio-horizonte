@@ -14,7 +14,7 @@ const defaultSEO = {
     'Formando líderes con valores desde 1985. Educación de excelencia con un enfoque humano e integral.',
   keywords:
     'colegio, educación, escuela, enseñanza, Santiago, Chile, colegio Horizonte, educación integral',
-  image: '/og-image.jpg',
+  image: '/og-image.svg',
 }
 
 export function SEO({
@@ -28,6 +28,7 @@ export function SEO({
 
   return (
     <Helmet>
+      <html lang="es" />
       <title>{title}</title>
       <meta name="description" content={description} />
       <meta name="keywords" content={keywords} />

@@ -3,23 +3,26 @@ import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { Baby, Sparkles, BookOpen, GraduationCap, MonitorSmartphone, Users, Globe, Lightbulb } from 'lucide-react'
 import { programsData, methodologyData } from '@/data/content'
-
-const iconMap: Record<string, React.FC<{ className?: string }>> = {
-  Baby,
-  Sparkles,
-  BookOpen,
-  GraduationCap,
-  MonitorSmartphone,
-  Users,
-  Globe,
-  Lightbulb,
-}
+import { SEO } from '@/components/layout/SEO'
 
 export default function Academic() {
   const [selectedProgram, setSelectedProgram] = useState(programsData[0])
 
+  const iconMap: Record<string, React.FC<{ className?: string }>> = {
+    Baby,
+    Sparkles,
+    BookOpen,
+    GraduationCap,
+    MonitorSmartphone,
+    Users,
+    Globe,
+    Lightbulb,
+  }
+
   return (
-    <div>
+    <>
+      <SEO title="Colegio Horizonte | Oferta Académica" description="Desde Nursery hasta Educación Media, formación integral con excelencia académica." pathname="/oferta-academica" />
+      <div>
       <section className="relative py-20 md:py-32 bg-gradient-to-br from-primary-50 via-white to-accent-50 overflow-hidden">
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute top-20 right-10 w-72 h-72 bg-primary-200/20 rounded-full blur-3xl" />
@@ -228,5 +231,6 @@ export default function Academic() {
         </div>
       </section>
     </div>
+    </>
   )
 }

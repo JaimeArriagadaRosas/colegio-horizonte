@@ -27,3 +27,9 @@ dist-ssr
 *.bak
 *.bat
 *.ps1
+
+# Secrets / env
+.env
+.env.*
+.env.local
+.env.*.local

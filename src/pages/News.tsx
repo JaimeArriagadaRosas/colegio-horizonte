@@ -3,11 +3,11 @@ import { motion } from 'framer-motion'
 import { Calendar, Tag, ArrowRight } from 'lucide-react'
 import { newsData } from '@/data/content'
 import { Link } from 'react-router-dom'
-
-const categories = ['Todos', ...new Set(newsData.map((n) => n.category))]
+import { SEO } from '@/components/layout/SEO'
 
 export default function News() {
   const [selectedCategory, setSelectedCategory] = useState('Todos')
+  const categories = ['Todos', ...new Set(newsData.map((n) => n.category))]
 
   const filteredNews =
     selectedCategory === 'Todos'
@@ -17,7 +17,9 @@ export default function News() {
   const featuredNews = newsData.find((n) => n.featured)
 
   return (
-    <div>
+    <>
+      <SEO title="Colegio Horizonte | Noticias y Eventos" description="Mantente al día con las últimas novedades, logros y eventos de nuestra comunidad educativa." pathname="/noticias" />
+      <div>
       <section className="relative py-20 md:py-32 bg-gradient-to-br from-primary-50 via-white to-accent-50 overflow-hidden">
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute top-20 left-10 w-72 h-72 bg-primary-200/20 rounded-full blur-3xl" />
@@ -70,7 +72,16 @@ export default function News() {
               className="mb-16 bg-gradient-to-r from-primary-50 to-accent-50 rounded-3xl overflow-hidden shadow-lg"
             >
               <div className="grid lg:grid-cols-2 gap-0">
-                <div className="aspect-video lg:aspect-auto bg-gradient-to-br from-primary-400 to-accent-400 flex items-center justify-center">
+                <div className="relative aspect-video lg:aspect-auto bg-gradient-to-br from-primary-400 to-accent-400 flex items-center justify-center overflow-hidden">
+                  <img
+                    src={featuredNews.image}
+                    alt={featuredNews.title}
+                    loading="lazy"
+                    onError={(e) => {
+                      ;(e.currentTarget as HTMLImageElement).style.display = 'none'
+                    }}
+                    className="absolute inset-0 w-full h-full object-cover"
+                  />
                   <div className="text-white text-center p-8">
                     <div className="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
                       <Tag className="w-10 h-10 text-white" />
@@ -102,7 +113,7 @@ export default function News() {
                     {featuredNews.content}
                   </p>
                   <Link
-                    to={`/noticias`}
+                    to={`/noticias/${featuredNews.id}`}
                     className="inline-flex items-center gap-2 text-primary-600 font-semibold hover:gap-3 transition-all"
                   >
                     Leer más
@@ -126,6 +137,15 @@ export default function News() {
                   className="card group overflow-hidden p-0"
                 >
                   <div className="aspect-video bg-gradient-to-br from-primary-100 to-accent-100 relative overflow-hidden">
+                    <img
+                      src={news.image}
+                      alt={news.title}
+                      loading="lazy"
+                      onError={(e) => {
+                        ;(e.currentTarget as HTMLImageElement).style.display = 'none'
+                      }}
+                      className="absolute inset-0 w-full h-full object-cover"
+                    />
                     <div className="absolute inset-0 flex items-center justify-center">
                       <Tag className="w-12 h-12 text-primary-300" />
                     </div>
@@ -150,10 +170,13 @@ export default function News() {
                     <p className="text-gray-600 leading-relaxed mb-4 line-clamp-3">
                       {news.excerpt}
                     </p>
-                    <button className="inline-flex items-center gap-2 text-primary-600 font-medium text-sm group-hover:gap-3 transition-all">
+                    <Link
+                      to={`/noticias/${news.id}`}
+                      className="inline-flex items-center gap-2 text-primary-600 font-medium text-sm group-hover:gap-3 transition-all"
+                    >
                       Leer más
                       <ArrowRight className="w-4 h-4" />
-                    </button>
+                    </Link>
                   </div>
                 </motion.article>
               ))}
@@ -161,5 +184,6 @@ export default function News() {
         </div>
       </section>
     </div>
+    </>
   )
 }

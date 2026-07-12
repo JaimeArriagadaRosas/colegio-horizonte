@@ -1,44 +1,104 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { useForm } from 'react-hook-form'
-import { z } from 'zod'
-import { zodResolver } from '@hookform/resolvers/zod'
 import { MapPin, Phone, Mail, Clock, Send, CheckCircle } from 'lucide-react'
 import { schoolData } from '@/data/content'
 import { Link } from 'react-router-dom'
+import { submitContact } from '@/utils/contact'
+import { SEO } from '@/components/layout/SEO'
 
-const formSchema = z.object({
-  name: z.string().min(3, 'El nombre debe tener al menos 3 caracteres'),
-  email: z.string().email('Ingresa un correo electrónico válido'),
-  phone: z.string().min(7, 'Ingresa un número de teléfono válido'),
-  subject: z.string().min(1, 'Selecciona un asunto'),
-  message: z.string().min(10, 'El mensaje debe tener al menos 10 caracteres'),
-})
+type FieldName = 'name' | 'email' | 'phone' | 'subject' | 'message' | 'website'
 
-type FormData = z.infer<typeof formSchema>
+type Errors = Partial<Record<FieldName, string>>
+
+const initialForm = {
+  name: '',
+  email: '',
+  phone: '',
+  subject: '',
+  message: '',
+  website: '',
+}
 
 export default function Contact() {
+  const [form, setForm] = useState(initialForm)
   const [submitted, setSubmitted] = useState(false)
+  const [serverError, setServerError] = useState<string | null>(null)
+  const [errors, setErrors] = useState<Errors>({})
+  const [touched, setTouched] = useState<Partial<Record<FieldName, boolean>>>({})
 
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors, isSubmitting },
-  } = useForm<FormData>({
-    resolver: zodResolver(formSchema),
-  })
+  useEffect(() => {
+    sessionStorage.setItem('contact_start_time', String(Date.now()))
+  }, [])
 
-  const onSubmit = async (data: FormData) => {
-    await new Promise((resolve) => setTimeout(resolve, 1500))
-    console.log('Form data:', data)
-    setSubmitted(true)
-    reset()
-    setTimeout(() => setSubmitted(false), 5000)
+  const validate = (values: typeof initialForm): Errors => {
+    const next: Errors = {}
+    if (!values.name.trim()) next.name = 'El nombre es requerido'
+    if (!values.email.trim()) next.email = 'El correo es requerido'
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email)) next.email = 'Correo inválido'
+    if (!values.phone.trim()) next.phone = 'El teléfono es requerido'
+    if (!values.subject) next.subject = 'Selecciona un asunto'
+    if (!values.message.trim()) next.message = 'El mensaje es requerido'
+    return next
+  }
+
+  const handleChange = (name: FieldName, value: string) => {
+    setForm((prev) => {
+      const next = { ...prev, [name]: value }
+      if (touched[name]) {
+        const fieldErrors = validate(next)
+        setErrors((prevErrors) => ({ ...prevErrors, [name]: fieldErrors[name] || '' }))
+      }
+      return next
+    })
+  }
+
+  const handleBlur = (name: FieldName) => {
+    setTouched((prev) => ({ ...prev, [name]: true }))
+    const fieldErrors = validate(form)
+    setErrors((prev) => ({ ...prev, [name]: fieldErrors[name] || '' }))
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setServerError(null)
+
+    const allTouched: Record<FieldName, boolean> = {
+      name: true,
+      email: true,
+      phone: true,
+      subject: true,
+      message: true,
+      website: true,
+    }
+    setTouched(allTouched)
+
+    const fieldErrors = validate(form)
+    setErrors(fieldErrors)
+
+    if (Object.keys(fieldErrors).length > 0) return
+
+    if (form.website && form.website.trim().length > 0) {
+      return
+    }
+
+    const { website: _website, ...payload } = form
+    const result = await submitContact(payload)
+
+    if (result.success) {
+      setSubmitted(true)
+      setForm(initialForm)
+      setErrors({})
+      setTouched({})
+      setTimeout(() => setSubmitted(false), 5000)
+    } else {
+      setServerError(result.message)
+    }
   }
 
   return (
-    <div>
+    <>
+      <SEO title="Colegio Horizonte | Contacto" description="Contáctanos para más información sobre admisiones, programas y visitas." pathname="/contacto" />
+      <div>
       <section className="relative py-20 md:py-32 bg-gradient-to-br from-primary-50 via-white to-accent-50 overflow-hidden">
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute top-20 left-10 w-72 h-72 bg-primary-200/20 rounded-full blur-3xl" />
@@ -96,63 +156,85 @@ export default function Contact() {
                   </motion.div>
                 )}
 
-                <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+                {serverError && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="mb-6 p-4 bg-red-50 border border-red-200 rounded-xl text-red-700 text-sm"
+                  >
+                    {serverError}
+                  </motion.div>
+                )}
+
+                <form onSubmit={handleSubmit} className="space-y-6" noValidate>
                   <div className="grid md:grid-cols-2 gap-6">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label htmlFor="contact-name" className="block text-sm font-medium text-gray-700 mb-2">
                         Nombre completo *
                       </label>
                       <input
-                        {...register('name')}
+                        id="contact-name"
+                        value={form.name}
+                        onChange={(e) => handleChange('name', e.target.value)}
+                        onBlur={() => handleBlur('name')}
                         className={`w-full px-4 py-3 rounded-xl border ${
                           errors.name ? 'border-red-300 bg-red-50' : 'border-gray-200'
                         } focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all`}
                         placeholder="Ej: Juan Pérez"
                       />
-                      {errors.name && (
-                        <p className="mt-1 text-sm text-red-600">{errors.name.message}</p>
+                      {touched.name && errors.name && (
+                        <p className="mt-1 text-sm text-red-600">{errors.name}</p>
                       )}
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label htmlFor="contact-email" className="block text-sm font-medium text-gray-700 mb-2">
                         Correo electrónico *
                       </label>
                       <input
-                        {...register('email')}
+                        id="contact-email"
+                        value={form.email}
+                        onChange={(e) => handleChange('email', e.target.value)}
+                        onBlur={() => handleBlur('email')}
                         type="email"
                         className={`w-full px-4 py-3 rounded-xl border ${
                           errors.email ? 'border-red-300 bg-red-50' : 'border-gray-200'
                         } focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all`}
                         placeholder="correo@ejemplo.com"
                       />
-                      {errors.email && (
-                        <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>
+                      {touched.email && errors.email && (
+                        <p className="mt-1 text-sm text-red-600">{errors.email}</p>
                       )}
                     </div>
                   </div>
 
                   <div className="grid md:grid-cols-2 gap-6">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label htmlFor="contact-phone" className="block text-sm font-medium text-gray-700 mb-2">
                         Teléfono *
                       </label>
                       <input
-                        {...register('phone')}
+                        id="contact-phone"
+                        value={form.phone}
+                        onChange={(e) => handleChange('phone', e.target.value)}
+                        onBlur={() => handleBlur('phone')}
                         className={`w-full px-4 py-3 rounded-xl border ${
                           errors.phone ? 'border-red-300 bg-red-50' : 'border-gray-200'
                         } focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all`}
                         placeholder="+56 9 1234 5678"
                       />
-                      {errors.phone && (
-                        <p className="mt-1 text-sm text-red-600">{errors.phone.message}</p>
+                      {touched.phone && errors.phone && (
+                        <p className="mt-1 text-sm text-red-600">{errors.phone}</p>
                       )}
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label htmlFor="contact-subject" className="block text-sm font-medium text-gray-700 mb-2">
                         Asunto *
                       </label>
                       <select
-                        {...register('subject')}
+                        id="contact-subject"
+                        value={form.subject}
+                        onChange={(e) => handleChange('subject', e.target.value)}
+                        onBlur={() => handleBlur('subject')}
                         className={`w-full px-4 py-3 rounded-xl border ${
                           errors.subject ? 'border-red-300 bg-red-50' : 'border-gray-200'
                         } focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all bg-white`}
@@ -163,45 +245,48 @@ export default function Contact() {
                         <option value="visita">Agendar visita</option>
                         <option value="otro">Otro</option>
                       </select>
-                      {errors.subject && (
-                        <p className="mt-1 text-sm text-red-600">{errors.subject.message}</p>
+                      {touched.subject && errors.subject && (
+                        <p className="mt-1 text-sm text-red-600">{errors.subject}</p>
                       )}
                     </div>
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label htmlFor="contact-message" className="block text-sm font-medium text-gray-700 mb-2">
                       Mensaje *
                     </label>
                     <textarea
-                      {...register('message')}
+                      id="contact-message"
+                      value={form.message}
+                      onChange={(e) => handleChange('message', e.target.value)}
+                      onBlur={() => handleBlur('message')}
                       rows={5}
                       className={`w-full px-4 py-3 rounded-xl border ${
                         errors.message ? 'border-red-300 bg-red-50' : 'border-gray-200'
                       } focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all resize-none`}
                       placeholder="Escribe tu mensaje aquí..."
                     />
-                    {errors.message && (
-                      <p className="mt-1 text-sm text-red-600">{errors.message.message}</p>
+                    {touched.message && errors.message && (
+                      <p className="mt-1 text-sm text-red-600">{errors.message}</p>
                     )}
                   </div>
 
+                  <input
+                    type="text"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    className="-mt-6 -sr-only"
+                    aria-hidden="true"
+                    value={form.website}
+                    onChange={(e) => handleChange('website', e.target.value)}
+                  />
+
                   <button
                     type="submit"
-                    disabled={isSubmitting}
-                    className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-primary-600 text-white font-semibold rounded-xl hover:bg-primary-700 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-lg hover:shadow-primary-600/25"
+                    className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-primary-600 text-white font-semibold rounded-xl hover:bg-primary-700 transition-all duration-200 hover:shadow-lg hover:shadow-primary-600/25"
                   >
-                    {isSubmitting ? (
-                      <>
-                        <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                        Enviando...
-                      </>
-                    ) : (
-                      <>
-                        Enviar mensaje
-                        <Send className="w-5 h-5" />
-                      </>
-                    )}
+                    Enviar mensaje
+                    <Send className="w-5 h-5" />
                   </button>
                 </form>
               </div>
@@ -282,19 +367,29 @@ export default function Contact() {
                 </Link>
               </div>
 
-              <div className="bg-gray-100 rounded-2xl aspect-video flex items-center justify-center">
-                <div className="text-center">
-                  <MapPin className="w-12 h-12 text-gray-400 mx-auto mb-3" />
-                  <p className="text-gray-500 text-sm font-medium">Mapa interactivo</p>
-                  <p className="text-gray-400 text-xs">
-                    {schoolData.location}
-                  </p>
-                </div>
+              <div className="rounded-2xl overflow-hidden border border-gray-100 shadow-sm">
+                <iframe
+                  title="Ubicación del Colegio Horizonte"
+                  src="https://www.openstreetmap.org/export/embed.html?bbox=-70.6380%2C-33.4310%2C-70.6140%2C-33.4210&layer=mapnik&marker=-33.4260%2C-70.6260"
+                  className="w-full aspect-video"
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                />
+                <a
+                  href="https://www.google.com/maps/dir/?api=1&destination=Av.+Providencia+1234,+Santiago,+Chile"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-2 bg-gray-100 px-4 py-3 text-sm font-medium text-primary-700 hover:bg-gray-200 transition-colors"
+                >
+                  <MapPin className="w-4 h-4" />
+                  Cómo llegar (Google Maps)
+                </a>
               </div>
             </motion.div>
           </div>
         </div>
       </section>
     </div>
+    </>
   )
 }

@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { GraduationCap, MapPin, Phone, Mail } from 'lucide-react'
+import { footerLinks } from '@/data/navigation'
 
 export function Footer() {
   const currentYear = new Date().getFullYear()
@@ -66,18 +67,10 @@ export function Footer() {
           <div>
             <h3 className="font-heading font-semibold text-lg mb-4">Enlaces Rápidos</h3>
             <ul className="space-y-3">
-              {[
-                { to: '/nosotros', label: 'Sobre Nosotros' },
-                { to: '/oferta-academica', label: 'Oferta Académica' },
-                { to: '/admision', label: 'Admisión' },
-                { to: '/noticias', label: 'Noticias' },
-                { to: '/galeria', label: 'Galería' },
-                { to: '/preguntas-frecuentes', label: 'FAQ' },
-                { to: '/contacto', label: 'Contacto' },
-              ].map((link) => (
-                <li key={link.to}>
+              {footerLinks.map((link) => (
+                <li key={link.path}>
                   <Link
-                    to={link.to}
+                    to={link.path}
                     className="text-gray-300 hover:text-white text-sm transition-colors"
                   >
                     {link.label}
@@ -138,13 +131,13 @@ export function Footer() {
             </p>
             <div className="flex gap-6">
               <Link
-                to="/preguntas-frecuentes"
+                to="/privacidad"
                 className="text-sm text-gray-400 hover:text-white transition-colors"
               >
                 Política de Privacidad
               </Link>
               <Link
-                to="/preguntas-frecuentes"
+                to="/terminos"
                 className="text-sm text-gray-400 hover:text-white transition-colors"
               >
                 Términos de Uso

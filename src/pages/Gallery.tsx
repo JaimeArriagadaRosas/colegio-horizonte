@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, Maximize2 } from 'lucide-react'
 import { galleryData } from '@/data/content'
+import { SEO } from '@/components/layout/SEO'
 
 const categories = ['Todas', ...galleryData.categories]
 
@@ -15,7 +16,9 @@ export default function Gallery() {
       : galleryData.images.filter((img) => img.category === selectedCategory)
 
   return (
-    <div>
+    <>
+      <SEO title="Colegio Horizonte | Galería" description="Revive los mejores momentos de nuestra comunidad educativa." pathname="/galeria" />
+      <div>
       <section className="relative py-20 md:py-32 bg-gradient-to-br from-primary-50 via-white to-accent-50 overflow-hidden">
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute top-20 left-10 w-72 h-72 bg-primary-200/20 rounded-full blur-3xl" />
@@ -72,12 +75,21 @@ export default function Gallery() {
                   className="group relative aspect-square bg-gray-200 rounded-xl overflow-hidden cursor-pointer shadow-sm hover:shadow-xl transition-shadow duration-300"
                   onClick={() =>
                     setLightbox({
-                      src: `https://picsum.photos/seed/${image.seed}/1200/800`,
+                      src: image.src,
                       alt: image.alt,
                     })
                   }
                 >
                   <div className="absolute inset-0 bg-gradient-to-br from-primary-200 to-accent-200" />
+                  <img
+                    src={image.src}
+                    alt={image.alt}
+                    loading="lazy"
+                    onError={(e) => {
+                      ;(e.currentTarget as HTMLImageElement).style.display = 'none'
+                    }}
+                    className="absolute inset-0 w-full h-full object-cover"
+                  />
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-300 flex items-center justify-center">
                     <Maximize2 className="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   </div>
@@ -117,7 +129,7 @@ export default function Gallery() {
               </button>
               <div className="bg-white rounded-2xl overflow-hidden shadow-2xl">
                 <img
-                  src={`https://picsum.photos/seed/${filteredImages.find(i => i.alt === lightbox.alt)?.seed || 'default'}/1200/800`}
+                  src={lightbox.src}
                   alt={lightbox.alt}
                   className="w-full aspect-video object-cover"
                 />
@@ -132,5 +144,6 @@ export default function Gallery() {
         )}
       </AnimatePresence>
     </div>
+    </>
   )
 }

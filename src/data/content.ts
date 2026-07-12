@@ -388,6 +388,250 @@ export const faqData = [
   },
 ]
 
+export type CalendarEventType =
+  | 'clases'
+  | 'feriado'
+  | 'reunion'
+  | 'evaluacion'
+  | 'evento'
+
+export const calendarLegend: { type: CalendarEventType; label: string }[] = [
+  { type: 'clases', label: 'Jornada de clases' },
+  { type: 'feriado', label: 'Feriado / sin clases' },
+  { type: 'reunion', label: 'Reunión de apoderados' },
+  { type: 'evaluacion', label: 'Evaluaciones / pruebas' },
+  { type: 'evento', label: 'Evento escolar' },
+]
+
+export const calendarData = [
+  {
+    month: 'Marzo',
+    events: [
+      { day: 10, title: 'Inicio de clases 2025', type: 'clases' as CalendarEventType },
+      { day: 21, title: 'Ceremonia de bienvenida', type: 'evento' as CalendarEventType },
+      { day: 28, title: 'Reunión de apoderados (1° reunión)', type: 'reunion' as CalendarEventType },
+    ],
+  },
+  {
+    month: 'Abril',
+    events: [
+      { day: 18, title: 'Vacaciones de Semana Santa', type: 'feriado' as CalendarEventType },
+      { day: 25, title: 'Cierre primer trimestre (primaria)', type: 'evaluacion' as CalendarEventType },
+    ],
+  },
+  {
+    month: 'Mayo',
+    events: [
+      { day: 1, title: 'Día del trabajo (sin clases)', type: 'feriado' as CalendarEventType },
+      { day: 21, title: 'Cientifico: Batalla de las artes', type: 'evento' as CalendarEventType },
+    ],
+  },
+  {
+    month: 'Junio',
+    events: [
+      { day: 9, title: 'Periodo de matrículas 2026', type: 'reunion' as CalendarEventType },
+      { day: 29, title: 'San Pedro y San Pablo (sin clases)', type: 'feriado' as CalendarEventType },
+    ],
+  },
+  {
+    month: 'Julio',
+    events: [
+      { day: 14, title: 'Inicio vacaciones de invierno', type: 'feriado' as CalendarEventType },
+      { day: 28, title: 'Retorno a clases', type: 'clases' as CalendarEventType },
+    ],
+  },
+  {
+    month: 'Agosto',
+    events: [
+      { day: 15, title: 'Asueto regional (sin clases)', type: 'feriado' as CalendarEventType },
+      { day: 22, title: 'Día del estudiante', type: 'evento' as CalendarEventType },
+    ],
+  },
+  {
+    month: 'Septiembre',
+    events: [
+      { day: 17, title: 'Fiestas patrias (sin clases)', type: 'feriado' as CalendarEventType },
+      { day: 19, title: 'Acto cívico y ramadas escolares', type: 'evento' as CalendarEventType },
+    ],
+  },
+  {
+    month: 'Octubre',
+    events: [
+      { day: 10, title: 'Día de la raza (sin clases)', type: 'feriado' as CalendarEventType },
+      { day: 24, title: 'Reunión de apoderados (2° reunión)', type: 'reunion' as CalendarEventType },
+    ],
+  },
+  {
+    month: 'Noviembre',
+    events: [
+      { day: 1, title: 'Día de todos los santos (sin clases)', type: 'feriado' as CalendarEventType },
+      { day: 15, title: 'Resultados PAES egresados', type: 'evaluacion' as CalendarEventType },
+    ],
+  },
+  {
+    month: 'Diciembre',
+    events: [
+      { day: 12, title: 'Ceremonia de graduación 4° medio', type: 'evento' as CalendarEventType },
+      { day: 19, title: 'Cierre de año escolar', type: 'clases' as CalendarEventType },
+    ],
+  },
+]
+
+export type DocumentCategory = 'Admisión' | 'Convivencia' | 'Académico' | 'Familia'
+
+export const documentsData: {
+  id: string
+  title: string
+  description: string
+  category: DocumentCategory
+  updated: string
+  content: string[]
+}[] = [
+  {
+    id: 'reglamento-convivencia',
+    title: 'Reglamento de Convivencia Escolar',
+    description:
+      'Normas de convivencia, deberes y derechos de estudiantes, y protocolos de resolución de conflictos (Ley 20.536).',
+    category: 'Convivencia',
+    updated: '2025-03-01',
+    content: [
+      'REGLAMENTO DE CONVIVENCIA ESCOLAR',
+      'Colegio Horizonte',
+      '',
+      '1. OBJETO',
+      'Este reglamento regula la convivencia escolar conforme a la Ley 20.536, promoviendo un ambiente de respeto, seguridad y participacion.',
+      '',
+      '2. DEBERES DE LOS ESTUDIANTES',
+      '- Asistir puntualmente a clases y cumplir con sus tareas.',
+      '- Respetar a sus pares, docentes y personal del colegio.',
+      '- Cuidar las instalaciones y materiales de la comunidad.',
+      '',
+      '3. PROTOCOLO DE CONFLICTOS',
+      'Los conflictos se resuelven mediante mediación del equipo de convivencia, priorizando la reparacion y no la exclusion.',
+      '',
+      '4. BUZON DE CONVIVENCIA',
+      'La comunidad puede reportar situaciones a traves del formulario de contacto del sitio web.',
+    ],
+  },
+  {
+    id: 'uniforme-escolar',
+    title: 'Guía de Uniforme Escolar',
+    description:
+      'Descripción del uniforme de diario, educación física y uso de agendina para cada nivel.',
+    category: 'Familia',
+    updated: '2025-02-20',
+    content: [
+      'GUIA DE UNIFORME ESCOLAR',
+      'Colegio Horizonte',
+      '',
+      'UNIFORME DE DIARIO',
+      '- Polera institucional (azul) con logo del colegio.',
+      '- Pantalón piluso o falda escolar (gris).',
+      '- Zapatos negros cerrados.',
+      '',
+      'EDUCACION FISICA',
+      '- Polera deportiva institucional.',
+      '- Short o pantalón deportivo (azul).',
+      '- Zapatillas deportivas.',
+      '',
+      'USO OPCIONAL',
+      '- Buzo institucional en invierno.',
+      '- Gorro y delantal segun nivel.',
+    ],
+  },
+  {
+    id: 'lista-utiles',
+    title: 'Lista de Útiles Escolares 2025',
+    description:
+      'Materiales sugeridos por nivel para el año académico 2025.',
+    category: 'Académico',
+    updated: '2025-02-15',
+    content: [
+      'LISTA DE UTILES ESCOLARES 2025',
+      'Colegio Horizonte',
+      '',
+      'EDUCACION BASICA',
+      '- 2 cuadernos college 100 hojas.',
+      '- Set de lapices grafito y colores.',
+      '- Caja de lápices de cera.',
+      '- Tijera sin punta, pegamento y cartulina.',
+      '',
+      'EDUCACION MEDIA',
+      '- Cuadernos de 200 hojas por asignatura.',
+      '- Computador portatil segun norma del colegio.',
+      '- Material de geometria.',
+      '',
+      'Nota: La lista completa por curso se entrega al matricularse.',
+    ],
+  },
+  {
+    id: 'formulario-postulacion',
+    title: 'Formulario de Postulación',
+    description:
+      'Antecedentes y pasos para iniciar el proceso de admisión al Colegio Horizonte.',
+    category: 'Admisión',
+    updated: '2025-01-10',
+    content: [
+      'FORMULARIO DE POSTULACION',
+      'Colegio Horizonte',
+      '',
+      'PASOS',
+      '1. Solicitar informacion en el sitio web o telefonicamente.',
+      '2. Agendar visita guiada a las instalaciones.',
+      '3. Entregar documentacion requerida.',
+      '4. Asistir a evaluacion y entrevista familiar.',
+      '5. Esperar notificacion de admision (15 dias habiles).',
+      '',
+      'DOCUMENTOS',
+      '- Certificado de nacimiento.',
+      '- Certificado de escolaridad anterior.',
+      '- Cedula de identidad del apoderado.',
+      '- Certificado de residencia y 2 fotos carné.',
+    ],
+  },
+  {
+    id: 'autorizacion-imagen',
+    title: 'Autorización de Uso de Imagen',
+    description:
+      'Consentimiento de apoderados para la publicación de fotografías de menores en medios del colegio (Ley 19.628).',
+    category: 'Familia',
+    updated: '2025-03-05',
+    content: [
+      'AUTORIZACION DE USO DE IMAGEN',
+      'Colegio Horizonte',
+      '',
+      'El suscrito apoderado autoriza/nO autoriza la captacion y publicacion de la imagen del alumno(a) en:',
+      '- Sitio web institucional.',
+      '- Redes sociales oficiales del colegio.',
+      '- Publicaciones internas y boletines.',
+      '',
+      'El colegio trata estos datos conforme a la Ley 19.628 de Proteccion de la Vida Privada y solo con fines educativos.',
+      '',
+      'Firma apoderado: ____________   Rut: ____________',
+    ],
+  },
+  {
+    id: 'calendario-escolar',
+    title: 'Calendario Escolar 2025 (resumen)',
+    description:
+      'Resumen imprimible de fechas clave del año académico.',
+    category: 'Académico',
+    updated: '2025-01-05',
+    content: [
+      'CALENDARIO ESCOLAR 2025',
+      'Colegio Horizonte',
+      '',
+      'MARZO: Inicio de clases 10, reunion de apoderados 28.',
+      'ABRIL: Vacaciones Semana Santa 18.',
+      'JULIO: Vacaciones de invierno 14 al 27.',
+      'SEPTIEMBRE: Fiestas patrias 17 y 18.',
+      'DICIEMBRE: Graduacion 4° medio 12, cierre de ano 19.',
+      '',
+      'El detalle completo esta disponible en la seccion Calendario del sitio.',
+    ],
+  },
+]
+
 export const testimonialsData = [
   {
     name: 'Carolina Mendoza',

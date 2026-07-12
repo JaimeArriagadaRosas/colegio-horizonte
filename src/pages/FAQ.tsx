@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronDown, Mail, Phone, MessageCircle } from 'lucide-react'
 import { faqData } from '@/data/content'
 import { Link } from 'react-router-dom'
+import { SEO } from '@/components/layout/SEO'
 
 export default function FAQ() {
   const [openQuestions, setOpenQuestions] = useState<Set<string>>(new Set())
@@ -21,7 +22,9 @@ export default function FAQ() {
   }
 
   return (
-    <div>
+    <>
+      <SEO title="Colegio Horizonte | Preguntas Frecuentes" description="Encuentra respuestas a las preguntas más comunes sobre nuestra institución." pathname="/preguntas-frecuentes" />
+      <div>
       <section className="relative py-20 md:py-32 bg-gradient-to-br from-primary-50 via-white to-accent-50 overflow-hidden">
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute top-20 left-10 w-72 h-72 bg-primary-200/20 rounded-full blur-3xl" />
@@ -178,5 +181,6 @@ export default function FAQ() {
         </div>
       </section>
     </div>
+    </>
   )
 }

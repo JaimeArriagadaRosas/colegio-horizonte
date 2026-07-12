@@ -20,7 +20,7 @@ El proyecto está construido sobre el siguiente stack tecnológico:
 - **Animaciones**: [Framer Motion 12](https://www.framer.com/motion/) para transiciones suaves y efectos interactivos.
 - **Enrutamiento**: [React Router Dom 7](https://reactrouter.com/)
 - **Iconografía**: [Lucide React](https://lucide.dev/)
-- **Formularios y Validación**: [React Hook Form](https://react-hook-form.com/) y [Zod](https://zod.dev/)
+- **Validación de Formularios**: Validación nativa con HTML5 y manejo de estado local en React.
 - **SEO**: [React Helmet Async](https://github.com/staylor/react-helmet-async)
 - **Linter**: [Oxlint](https://oxc.rs/docs/guide/usage/linter/intro.html) para un análisis estático de código ultra rápido.
 
@@ -80,8 +80,8 @@ El proyecto incluye dos scripts `.bat` y `.ps1` en la raíz para facilitar tarea
 
 ### 1. `iniciar.bat`
 Este script automatiza el arranque del entorno de desarrollo.
-- **Función**: Verifica si la carpeta `node_modules` existe; de no ser así, instala las dependencias mediante `npm install` de forma automática. Luego inicia el servidor de desarrollo de Vite accesible de manera externa (`--host`).
-- **Uso**: Simplemente haz doble clic sobre el archivo `iniciar.bat` o ejecútalo en la terminal.
+- **Función**: Verifica si la carpeta `node_modules` existe; de no ser así, instala las dependencias mediante `npm install` de forma automática. Luego inicia el servidor de desarrollo de Vite.
+- **Uso**: Ejecutar desde la raíz del proyecto: `iniciar.bat`
 
 ### 2. `deploy.bat` / `deploy.ps1`
 Este script automatiza el control de versiones y el envío del código a GitHub.
@@ -94,5 +94,5 @@ Este script automatiza el control de versiones y el envío del código a GitHub.
 
 1. **Diseño Premium y Responsivo**: Adaptado perfectamente para dispositivos móviles, tablets y computadoras de escritorio.
 2. **Interactividad Dinámica**: Uso de animaciones de entrada, efectos hover elegantes y carga diferida visual integrada con Framer Motion.
-3. **Formularios Validados**: Formulario de contacto inteligente que evita el envío de datos incompletos o incorrectos mediante validaciones robustas de Zod y manejo eficiente con React Hook Form.
+3. **Formularios Validados**: Formulario de contacto con validación HTML5, manejo de errores por campo y feedback de envío.
 4. **Optimización SEO**: Cada vista tiene meta-etiquetas descriptivas, títulos personalizados y etiquetas canónicas administradas a través de `react-helmet-async` e implementadas en el componente `SEO`.
