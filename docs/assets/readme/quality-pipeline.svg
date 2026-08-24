@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="300" viewBox="0 0 1200 300" role="img" aria-labelledby="title desc">
+  <title id="title">Quality pipeline</title>
+  <desc id="desc">Source code passes lint, TypeScript build, Lighthouse CI, GitHub Actions, Vercel deployment and then production observability.</desc>
+  <rect width="1200" height="300" rx="24" fill="#0f172a"/>
+  <g font-family="Arial, Helvetica, sans-serif">
+    <text x="60" y="48" fill="#f8fafc" font-size="26" font-weight="700">Quality pipeline</text>
+    <text x="60" y="76" fill="#94a3b8" font-size="14">Quality is measured before deployment and observed again in production.</text>
+    <g text-anchor="middle">
+      <g><rect x="60" y="120" width="130" height="70" rx="14" fill="#1e293b" stroke="#334155"/><text x="125" y="151" fill="#f8fafc" font-size="16" font-weight="700">Source</text><text x="125" y="174" fill="#94a3b8" font-size="12">React + TS</text></g>
+      <g><rect x="220" y="120" width="130" height="70" rx="14" fill="#1e293b" stroke="#334155"/><text x="285" y="151" fill="#f8fafc" font-size="16" font-weight="700">Oxlint</text><text x="285" y="174" fill="#94a3b8" font-size="12">Static analysis</text></g>
+      <g><rect x="380" y="120" width="130" height="70" rx="14" fill="#1e293b" stroke="#334155"/><text x="445" y="151" fill="#f8fafc" font-size="16" font-weight="700">Build</text><text x="445" y="174" fill="#94a3b8" font-size="12">tsc + Vite</text></g>
+      <g><rect x="540" y="120" width="130" height="70" rx="14" fill="#1e293b" stroke="#334155"/><text x="605" y="151" fill="#f8fafc" font-size="16" font-weight="700">Lighthouse</text><text x="605" y="174" fill="#94a3b8" font-size="12">Quality gates</text></g>
+      <g><rect x="700" y="120" width="130" height="70" rx="14" fill="#1e293b" stroke="#334155"/><text x="765" y="151" fill="#f8fafc" font-size="16" font-weight="700">Actions</text><text x="765" y="174" fill="#94a3b8" font-size="12">CI</text></g>
+      <g><rect x="860" y="120" width="130" height="70" rx="14" fill="#1e293b" stroke="#334155"/><text x="925" y="151" fill="#f8fafc" font-size="16" font-weight="700">Vercel</text><text x="925" y="174" fill="#94a3b8" font-size="12">Deployment</text></g>
+      <g><rect x="1020" y="120" width="130" height="70" rx="14" fill="#1e293b" stroke="#334155"/><text x="1085" y="151" fill="#f8fafc" font-size="16" font-weight="700">Observe</text><text x="1085" y="174" fill="#94a3b8" font-size="12">Search + GA4</text></g>
+    </g>
+    <g stroke="#34d399" stroke-width="3" fill="none"><path d="M190 155h30M350 155h30M510 155h30M670 155h30M830 155h30M990 155h30"/></g>
+    <g fill="#34d399"><path d="M220 155l-9-6v12z"/><path d="M380 155l-9-6v12z"/><path d="M540 155l-9-6v12z"/><path d="M700 155l-9-6v12z"/><path d="M860 155l-9-6v12z"/><path d="M1020 155l-9-6v12z"/></g>
+    <text x="600" y="242" text-anchor="middle" fill="#cbd5e1" font-size="14">Representative routes are audited from the production build, not from the development server.</text>
+  </g>
+</svg>
