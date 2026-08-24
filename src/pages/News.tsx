@@ -76,7 +76,8 @@ export default function News() {
                   <img
                     src={featuredNews.image}
                     alt={featuredNews.title}
-                    loading="lazy"
+                    loading="eager"
+                    fetchPriority="high"
                     onError={(e) => {
                       ;(e.currentTarget as HTMLImageElement).style.display = 'none'
                     }}
