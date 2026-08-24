@@ -51,18 +51,23 @@ export default function Academic() {
 
       <section className="section-padding bg-white">
         <div className="container-custom">
+          <h2 className="text-3xl md:text-4xl font-heading font-bold text-primary-950 text-center mb-10">
+            Niveles educativos
+          </h2>
           <div className="grid md:grid-cols-4 gap-6">
             {programsData.map((program, index) => {
               const Icon = iconMap[program.icon]
               return (
-                <motion.div
+                <motion.button
+                  type="button"
+                  aria-pressed={selectedProgram.id === program.id}
                   key={program.id}
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: index * 0.1 }}
                   onClick={() => setSelectedProgram(program)}
-                  className={`cursor-pointer p-6 rounded-xl border-2 transition-all duration-300 ${
+                  className={`w-full text-left cursor-pointer p-6 rounded-xl border-2 transition-all duration-300 ${
                     selectedProgram.id === program.id
                       ? 'border-primary-600 bg-primary-50 shadow-lg'
                       : 'border-gray-200 hover:border-primary-300 hover:shadow-md'
@@ -75,11 +80,11 @@ export default function Academic() {
                   }`}>
                     {Icon && <Icon className="w-6 h-6" />}
                   </div>
-                  <h3 className="text-lg font-heading font-semibold text-primary-900 mb-1">
+                  <span className="block text-lg font-heading font-semibold text-primary-900 mb-1">
                     {program.title}
-                  </h3>
-                  <p className="text-sm text-gray-500">{program.subtitle}</p>
-                </motion.div>
+                  </span>
+                  <span className="block text-sm text-gray-600">{program.subtitle}</span>
+                </motion.button>
               )
             })}
           </div>
@@ -112,7 +117,7 @@ export default function Academic() {
                     {selectedProgram.features.map((feature, index) => (
                       <li key={index} className="flex items-start gap-3">
                         <div className="w-5 h-5 bg-primary-600 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                          <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                          <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3} aria-hidden="true">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                           </svg>
                         </div>
@@ -137,7 +142,7 @@ export default function Academic() {
                     className="inline-flex items-center gap-2 px-6 py-3 bg-white text-primary-600 font-medium rounded-lg hover:bg-gray-100 transition-colors"
                   >
                     Postular Ahora
-                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
                     </svg>
                   </Link>
@@ -215,7 +220,7 @@ export default function Academic() {
                   className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-primary-600 font-semibold rounded-xl hover:bg-gray-100 transition-all duration-200"
                 >
                   Ver Proceso de Admisión
-                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
                   </svg>
                 </Link>
