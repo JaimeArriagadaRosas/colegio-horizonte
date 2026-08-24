@@ -1,0 +1,37 @@
+Colegio Horizonte Proprietary Source-Available License
+Copyright (c) 2026. All rights reserved.
+
+1. Scope
+
+This license applies to the original source code, documentation, project-owned visual assets, project-owned SVG files, design work and other original material in this repository (the "Project"), except for third-party material that is governed by its own license.
+
+2. Permitted access
+
+You may view and inspect the Project for personal evaluation, portfolio review, educational reference and security review.
+
+3. No grant of reuse rights
+
+Except where required by applicable law or expressly authorized in writing by the copyright holder, you may not:
+
+- copy or redistribute the Project or substantial portions of it;
+- publish, sublicense, sell, rent or commercially exploit the Project;
+- rebrand the Project or present it, in whole or in substantial part, as your own work;
+- deploy, host or distribute a copied or derivative version of the Project for public, institutional or commercial use;
+- create or distribute derivative works based on the Project;
+- remove copyright, attribution, provenance or license notices.
+
+4. Public repository behavior
+
+This repository may be publicly accessible. Public visibility does not grant rights beyond those stated in this license. Platform functionality provided by GitHub, including viewing and forking within GitHub, is subject to GitHub's own terms and does not independently grant permission to use, redistribute, deploy or commercialize the Project outside those platform functions.
+
+5. Third-party material
+
+Third-party libraries, icons, fonts, logos and other materials remain subject to their respective licenses and trademark rules. Nothing in this license changes or restricts rights granted by those third-party licenses. See `docs/THIRD_PARTY_ASSETS.md` and dependency metadata for provenance information.
+
+6. No warranty
+
+THE PROJECT IS PROVIDED FOR DEMONSTRATION AND EDUCATIONAL REFERENCE PURPOSES "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. TO THE MAXIMUM EXTENT PERMITTED BY LAW, THE COPYRIGHT HOLDER SHALL NOT BE LIABLE FOR CLAIMS, DAMAGES OR OTHER LIABILITY ARISING FROM USE OF OR RELIANCE ON THE PROJECT.
+
+7. Written permission
+
+Permissions outside this license require prior written authorization from the copyright holder.
