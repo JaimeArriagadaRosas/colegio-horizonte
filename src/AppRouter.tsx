@@ -5,7 +5,6 @@ import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
 import { HelmetProvider } from 'react-helmet-async'
 import { ErrorBoundary } from '@/components/ErrorBoundary'
-import { SEO } from '@/components/layout/SEO'
 
 const Home = lazy(() => import('@/pages/Home'))
 const About = lazy(() => import('@/pages/About'))
@@ -33,7 +32,6 @@ export default function AppRouter() {
     <div className="min-h-screen flex flex-col">
       <ScrollToTop />
       <HelmetProvider>
-        <SEO />
         <Navbar />
         <main id="main-content" className="flex-1 min-h-screen">
           <ErrorBoundary>
