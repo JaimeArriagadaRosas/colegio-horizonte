@@ -18,7 +18,8 @@ const defaultSEO = {
 }
 
 const configuredSiteUrl = import.meta.env.VITE_SITE_URL?.trim().replace(/\/$/, '')
-const siteUrl = configuredSiteUrl || 'https://colegiohorizonte.cl'
+const runtimeSiteUrl = typeof window !== 'undefined' ? window.location.origin : ''
+const siteUrl = configuredSiteUrl || runtimeSiteUrl
 const googleSiteVerification = import.meta.env.VITE_GOOGLE_SITE_VERIFICATION?.trim()
 
 export function SEO({
